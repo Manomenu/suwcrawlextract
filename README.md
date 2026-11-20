@@ -1,12 +1,12 @@
 # suwcrawlextract
 
-Once a day, an AI agent reads what changed in the owner's apps and asks one question: is any of it worth moving into a
+Every three days, an AI agent reads what changed in the owner's apps and asks one question: is any of it worth moving into a
 shared kit ([suwgate](https://github.com/Manomenu/suwgate), [suwfrontkit](https://github.com/Manomenu/suwfrontkit),
 [suwbackkit](https://github.com/Manomenu/suwbackkit)), or did an app write again what a kit already ships? Each answer
 is an issue in this repository. Nothing else is changed anywhere: the owner decides.
 
 ```
-Claude Code cloud scheduled task (daily)
+Claude Code cloud scheduled task (every 3 days)
   clones: suwcrawlextract + the tracked apps + the three kits
   reads:  REVIEW.md here (the whole procedure)
   diffs:  each app since the commit the last run reviewed (the issue labelled `state`)
@@ -26,7 +26,7 @@ is a commit to REVIEW.md, and the next run follows it.
     - repositories: `suwcrawlextract` first, then `suwstockdrill`, `alfusion`, `suwagcms`, `suwalski-agent-eval`,
       `suwchatbot`, `solid-dotnet-app-tpl`, `suwgate`, `suwfrontkit`, `suwbackkit`
     - environment: Default (limited network is enough: only GitHub, through the proxy)
-    - schedule: daily, a few minutes past the hour (on the hour can start late), e.g. 06:07
+    - schedule: every three days, a few minutes past the hour (on the hour can start late): cron `CRON_TZ=Europe/Warsaw 7 6 */3 * *`
     - connectors: remove them all; the run needs none
 3. **First run:** on the task's page, **Run now**, then open the run and read its summary. The first run reviews the last
    14 days of each app.

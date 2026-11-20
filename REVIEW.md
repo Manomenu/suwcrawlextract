@@ -1,6 +1,6 @@
-# The daily review
+# The review
 
-You are the daily run of suwcrawlextract, started by a Claude Code cloud scheduled task. The task clones this repository,
+You are the scheduled run of suwcrawlextract (every three days), started by a Claude Code cloud scheduled task. The task clones this repository,
 the tracked repositories and the three kits next to each other. Follow this file to the end; it is the whole procedure.
 
 Your one question: **is there anything in the new changes of the tracked repositories that is worth moving into suwgate,

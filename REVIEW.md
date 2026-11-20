@@ -43,10 +43,14 @@ own copy of a guard, its own health endpoint). Then the proposal is "use the kit
    name → the last commit of its default branch that a run reviewed). A repository without an entry is reviewed over its
    last 14 days.
 2. **What changed.** In each tracked repository: `git log --no-merges <reviewed>..HEAD` on the default branch, then the diff.
-   Nothing new anywhere: go to step 5.
-3. **Judge.** For each change that looks generic, read the code around it, not only the diff, and look for the same thing
-   in the other tracked repositories and in the kits (`rg` across the folders). Write down the evidence: file paths at
-   commit SHAs in every repository that has it. Drop what fails the rules above.
+   If the clone lacks the reviewed commit (a shallow clone), run `git fetch --unshallow` first, or read the range with
+   `gh api repos/Manomenu/<repo>/compare/<reviewed>...<head>`. Nothing new anywhere: go to step 5.
+3. **Judge.** The diffs of step 2 are the only source of candidates. Look only at what these commits added or changed;
+   code that was already there before them is not this run's business, even when it would qualify (an earlier run saw
+   it, or will see it when it next changes). Do not list or sweep whole folders of any repository. For each changed piece
+   that looks generic, read the code around it, then search the other tracked repositories and the kits for that piece
+   by its names (`rg <name>` across the folders) to find whether it exists elsewhere. Write down the evidence: file paths
+   at commit SHAs in every repository that has it. Drop what fails the rules above.
 4. **Report.** Before writing, list every issue labelled `candidate`, open and closed
    (`gh api "repos/Manomenu/suwcrawlextract/issues?state=all&labels=candidate&per_page=100"`), and read the last comment
    of the closed ones: the owner's reason for closing says what they do not want. Then for each surviving candidate:

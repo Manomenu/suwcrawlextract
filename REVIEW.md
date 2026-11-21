@@ -37,6 +37,14 @@ suwgate check whose use is obvious elsewhere; anything a kit's TODO.md or an ope
 Also a candidate, often the most valuable one: **an app that wrote again what a kit already ships** (its own button, its
 own copy of a guard, its own health endpoint). Then the proposal is "use the kit's X", with the places to change.
 
+Also a candidate: **an app test that only checks a kit piece again**. A web or server test in an app whose every assertion is about
+how a kit component or helper behaves or looks (a dialog opens and closes, a link asks before leaving, a retry rule, the
+shell's panel, a date format, an error screen's reset) belongs to the kit alone; the app keeps only the tests of its own
+features and wiring (that it uses the piece, with its data, for its own criterion). The owner wants the heavy component tests
+paid once, in the kit, so an app's full gate stays light. Then the proposal is "delete this app test", with each test's path at
+its commit and the kit test that already covers it; a case the kit's tests do not cover yet is proposed for the kit in the
+same issue. A test added in the reviewed commits counts as changed code under step 3.
+
 ## Steps
 
 1. **State.** Read the open issue labelled `state` in `Manomenu/suwcrawlextract` (its body is a YAML block: repository
@@ -71,7 +79,7 @@ Write the issue in Polish (the owner reads Polish); code, names and paths stay a
 
 - **Title:** `[<kit>] <what moves, in a few words>`, for example `[suwfrontkit] Pasek postępu z alfusion i suwagcms`.
 - **Labels:** `candidate` and one of `kit:suwgate`, `kit:suwfrontkit`, `kit:suwbackkit`; `use-the-kit` when the proposal is
-  to use what a kit already has.
+  to use what a kit already has; `test-in-kit` when the proposal is to delete app tests that only check a kit piece.
 - **Body**, these headings in this order:
     - `## Co` — what it is, two or three sentences.
     - `## Gdzie jest dziś` — a link to each place, at its commit SHA (`https://github.com/Manomenu/<repo>/blob/<sha>/<path>#L<a>-L<b>`).
